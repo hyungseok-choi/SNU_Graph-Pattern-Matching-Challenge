@@ -15,9 +15,7 @@ std::vector<Vertex> Backtrack::intersection(std::vector<Vertex> &v1, std::vector
     std::sort(v1.begin(), v1.end());
     std::sort(v2.begin(), v2.end());
 
-    std::set_intersection(v1.begin(),v1.end(),
-                          v2.begin(),v2.end(),
-                          back_inserter(v3));
+    std::set_intersection(v1.begin(),v1.end(), v2.begin(),v2.end(), back_inserter(v3));
     return v3;
 }
 
@@ -51,12 +49,11 @@ void Backtrack::BuildDag(){
 
   src_vv.resize(num_q);
   parent.resize(num_q);
-  dest_vv.resize(num_q);
+  dest_vv.resize(num_q); 
+
   //initialize visit
-  bool visit[num_q];
-  for(size_t vetx = 0; vetx < num_q; ++vetx){
-    visit[vetx] = false;
-  }
+  bool visit[num_q] = {false};
+
   //BFS from root
   int edge_count = 0;
   std::queue<size_t> q;
@@ -102,12 +99,10 @@ void Backtrack::Backtracking(
     
   } else if(M.empty()){
     //for each v in candidates of root,
-    // std::cout << "I'm in else if\n";
     for(size_t c_idx = 0; c_idx < cs.GetCandidateSize(root); ++c_idx){
       Vertex v = cs.GetCandidate(root, c_idx);
       // m <- {(r,v)}
       M.clear();
-      // std::cout << "-------------"<<root << " is mapping to " << v << "-------------\n"; 
       M.insert(std::make_pair(root, v));
       std::vector<std::vector<Vertex>> src_vv_prime = src_vector;
       // compute extendable, extendable_candidates
@@ -119,13 +114,11 @@ void Backtrack::Backtracking(
         //if source list is empty = extendable
         if(src_vv_prime[dest_vv[root][idx]].empty()){
           auto me = dest_vv[root][idx];
-          // std::cout << me << " is extendable !\n";
           extendable.push_back(me);
           //compute vector of ext_cand[me]
           std::vector<Vertex> result;
           for(size_t p_idx = 0; p_idx < parent[me].size(); ++p_idx){
             auto p_id = parent[me][p_idx];
-            // std::cout << "p_id : " << p_id << "mapping to : " << M[p_id] << "\n";
             std::vector<Vertex> u_p;
             //find vertices v adjacent to M[p_id] in G, 
             for(size_t nb = data.GetNeighborStartOffset(M[p_id]); nb < data.GetNeighborEndOffset(M[p_id]); ++nb){
@@ -144,13 +137,8 @@ void Backtrack::Backtracking(
               }
             }
             if(p_idx == 0) result = u_p;
-            else {
-              // std::vector<Vertex> temp = result;
-              // set_intersection(u_p.begin(), u_p.end(), temp.begin(), temp.end(), back_inserter(result));
-              result = intersection(result, u_p);
-            }
+            else result = intersection(result, u_p);
           }
-          // std::cout << "result size : " << result.size() << "\n";
           ext_cand[me] = result;
         }
       }
@@ -173,7 +161,6 @@ void Backtrack::Backtracking(
       }
     }
     auto u = extendable.at(min_ext_idx);
-    // std::cout << "selected u : " << u << "\n";
     extendable.erase(remove(extendable.begin(), extendable.end(), u), extendable.end());
     //for each v in ext_cand[u]
     for(size_t cand_idx = 0; cand_idx < ext_cand[u].size(); ++cand_idx){
@@ -184,7 +171,6 @@ void Backtrack::Backtracking(
         auto extendable_prime = extendable;
         auto ext_cand_prime = ext_cand;
         std::vector<std::vector<Vertex>> src_vv_prime = src_vector;
-        // std::cout << u << " is mapping to " << v << "\n"; 
         M_prime.insert(std::make_pair(u,v));
         // compute extendable, extendable_candidates
         
@@ -196,13 +182,11 @@ void Backtrack::Backtracking(
           //if source list is empty = extendable
           if(src.empty()){
             auto me = dest_vv[u][idx];
-            //std::cout << me << " is extendable !\n";
             extendable_prime.push_back(me);
             //compute ext_cand[me]
             std::vector<Vertex> result;
             for(size_t p_idx = 0; p_idx < parent[me].size(); ++p_idx){
               auto p_id = parent[me][p_idx];
-              //std::cout << "p_id : " << p_id << " is mapping to : " << M_prime[p_id] << "\n";
               std::vector<Vertex> u_p;
               //find vertices v adjacent to M[p_id] in G, 
               for(size_t nb = data.GetNeighborStartOffset(M_prime[p_id]); nb < data.GetNeighborEndOffset(M_prime[p_id]); ++nb){
@@ -260,6 +244,4 @@ void Backtrack::PrintAllMatches() {
   count = 0;
 
   Backtracking(M, extendable, ext_cand, src_vector);
-
-  std::cout << "final count : " << count << "\n";
 }
