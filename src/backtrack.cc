@@ -4,8 +4,6 @@
  */
 
 #include "backtrack.h"
-#include <queue>
-
 
 Backtrack::Backtrack(const Graph &data, const Graph &query,const CandidateSet &cs) : data(data), query(query), cs(cs) {
 }
@@ -94,9 +92,9 @@ void Backtrack::Backtracking(
   if(M.size() == query.GetNumVertices()){
     //Report M
     count += 1;
-    std::cout << "-------------report :" << count << "------------\n";
+    std::cout << "c ";
     for(auto it = M.begin(); it != M.end(); it++){
-      std::cout << "(" << it->first << "," << it->second << "),";
+      std::cout << it->second << " ";
     }
     std::cout << "\n";
 
@@ -254,7 +252,7 @@ void Backtrack::PrintAllMatches() {
 
   visit_d = new bool[num_d];
   
-  for(size_t vetx = 1; vetx < num_d; ++vetx){
+  for(size_t vetx = 0; vetx < num_d; ++vetx){
     visit_d[vetx] = false;
   }
 

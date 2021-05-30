@@ -1,5 +1,0 @@
-/Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/build/CMakeFiles/rebuild_cache.dir
-/Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/build/CMakeFiles/edit_cache.dir
-/Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/build/main/CMakeFiles/rebuild_cache.dir
-/Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/build/main/CMakeFiles/edit_cache.dir
-/Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/build/main/CMakeFiles/program.dir

@@ -15,6 +15,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <queue>
 
 using Vertex = int32_t;
 using Label = int32_t;
