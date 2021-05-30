@@ -13,13 +13,13 @@ echo "make done"
 echo "--------------------------------"
 
 echo "Executing First Graph with First Query"
-for i in n3 n5 n8 s1 s3 s5 s8
+for i in s8
 do
         start=$SECONDS
 
         # 무한루프를 방지하기 위해 input 당 시간제한
         
-        gtimeout 60s ./main/program /Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/data/lcc_human.igraph /Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/query/lcc_human_$i.igraph /Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/candidate_set/lcc_human_$i.cs
+        gtimeout 60s ./main/program /Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/data/lcc_yeast.igraph /Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/query/lcc_yeast_$i.igraph /Users/hyesoo/Desktop/Graph-Pattern-Matching-Challenge/candidate_set/lcc_yeast_$i.cs
         echo "Execution time : $((SECONDS-start)) seconds"
 
 done
