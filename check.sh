@@ -12,7 +12,7 @@ make
 
 echo "-execute your program-"
 
-for i in n1 s1 n3 s3 n5 s5 n8 s8
+for i in n1
 do
         start=$SECONDS
 

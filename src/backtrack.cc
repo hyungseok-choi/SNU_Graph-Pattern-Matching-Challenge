@@ -56,7 +56,7 @@ void Backtrack::BuildDag(){
   dest_vv.resize(num_q);
   //initialize visit
   bool visit[num_q];
-  for(size_t vetx = 1; vetx < num_q; ++vetx){
+  for(size_t vetx = 0; vetx < num_q; ++vetx){
     visit[vetx] = false;
   }
   //BFS from root
@@ -82,30 +82,7 @@ void Backtrack::BuildDag(){
       }
     }
   }
-  // std::cout << "edge count"<< edge_count << " num edges:" << query.GetNumEdges() << "\n";
-  // std::cout << "print dest\n";
-  // for(size_t row = 0; row < num_q; ++row){
-  //   if(!dest_vv[row].empty())
-  //     std::cout << row << "goes to :";
-  //   for(size_t col = 0; col < dest_vv[row].size(); ++col){
-  //     std::cout << dest_vv[row][col] << " ";
-  //   }
-  //   if(!dest_vv[row].empty())
-  //     std::cout << "\n";
-  // }
-  // std::cout << "print src\n";
-  // for(size_t row = 0; row < num_q; ++row){
-  //   if(!src_vv[row].empty())
-  //     std::cout << row << "comes from :";
-  //   for(size_t col = 0; col < src_vv[row].size(); ++col){
-  //     std::cout << src_vv[row][col] << " ";
-  //   }
-  //   if(!src_vv[row].empty())
-  //     std::cout << "\n";
-  // }
-
   parent = src_vv;
-
 }
 
 void Backtrack::Backtracking(
@@ -123,7 +100,7 @@ void Backtrack::Backtracking(
     }
     std::cout << "\n";
 
-    if(count == 100000) return;
+    if(count == 100000) exit(0);
     
   } else if(M.empty()){
     //for each v in candidates of root,
@@ -187,7 +164,6 @@ void Backtrack::Backtracking(
   } else {
     //get C_M(u) of all u in extendable and choose u with minimum size of C_M(u)
     if(extendable.size() < 1) {
-      std::cout << "no extendable \n";
       return;
     }
     int min_ext_c = ext_cand[extendable[0]].size();
@@ -215,12 +191,12 @@ void Backtrack::Backtracking(
         // compute extendable, extendable_candidates
         
         for(size_t idx = 0; idx < dest_vv[u].size(); ++idx){
-          std::vector<Vertex> src = src_vector[dest_vv[u][idx]];
+          std::vector<Vertex> src = src_vv_prime[dest_vv[u][idx]];
           //remove src from destination's source list
           src.erase(std::remove(src.begin(), src.end(), u), src.end());
           src_vv_prime[dest_vv[u][idx]] = src;
           //if source list is empty = extendable
-          if(src_vv_prime[dest_vv[u][idx]].empty()){
+          if(src.empty()){
             auto me = dest_vv[u][idx];
             //std::cout << me << " is extendable !\n";
             extendable_prime.push_back(me);
@@ -259,8 +235,6 @@ void Backtrack::Backtracking(
         visit_d[v] = false;
       }
     }
-    
-
   }
 }
 
@@ -271,15 +245,6 @@ void Backtrack::PrintAllMatches() {
   num_d = data.GetNumVertices();
   num_q = query.GetNumVertices();
 
-  //initialize DAG
-  //
-  // DAG = new int*[num_q];
-  // for(size_t row = 0; row < num_q; ++row){
-  //   DAG[row] = new int[num_q];
-  //   for(size_t col = 0; col < num_q; ++col){
-  //     DAG[row][col] = 0;
-  //   }
-  // }
   BuildDag();
 
   std::map<size_t,size_t> M;
