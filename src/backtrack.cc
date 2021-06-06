@@ -22,12 +22,14 @@ std::vector<Vertex> Backtrack::intersection(std::vector<Vertex> &v1, std::vector
 
 void Backtrack::BuildDag(){
   float Score[num_q];
-  for(size_t u = 0; u < num_q ; ++u){
+  //for(size_t u = 0; u < num_q ; ++u){
+  for(size_t u = num_q ; u--; ){
     Label label_u = query.GetLabel(u);
     size_t deg_u = query.GetDegree(u);
     //get number of elements in C_ini
     int C_ini = 0;
-    for(size_t v = 0; v < data.GetNumVertices(); ++v){
+    //for(size_t v = 0; v < data.GetNumVertices(); ++v){
+    for(size_t v = data.GetNumVertices(); v--; ){
       if(data.GetLabel(v) == label_u && data.GetDegree(v) >= deg_u){
         C_ini += 1;
       }
@@ -40,7 +42,7 @@ void Backtrack::BuildDag(){
 
   //find root
   float min_score = Score[0];
-  for(size_t s = 1; s < num_q; ++s){
+  for(size_t s = num_q; s--; ){
     if(Score[s] < min_score){
       min_score = Score[s];
       root = s;
@@ -53,7 +55,7 @@ void Backtrack::BuildDag(){
 
   //initialize visit
   bool visit[num_q];
-  for(size_t vetx = 0; vetx < num_q; ++vetx){
+  for(size_t vetx = num_q; vetx--; ){
     visit[vetx] = false;
   }
 
@@ -119,7 +121,8 @@ void Backtrack::Backtracking(
           extendable.push_back(me);
           //compute vector of ext_cand[me]
           std::vector<Vertex> result;
-          for(size_t p_idx = 0; p_idx < parent[me].size(); ++p_idx){
+          //for(size_t p_idx = 0; p_idx < parent[me].size(); ++p_idx){
+          for(size_t p_idx = parent[me].size(); p_idx--; ){
             auto p_id = parent[me][p_idx];
             std::vector<Vertex> u_p;
             //find vertices v adjacent to M[p_id] in G, 
@@ -127,7 +130,8 @@ void Backtrack::Backtracking(
               Vertex v = data.GetNeighbor(nb);
               //and check if v is in candidate vector of me
               bool find = false;
-              for(size_t c_idx = 0; c_idx < cs.GetCandidateSize(me); ++c_idx){
+              //for(size_t c_idx = 0; c_idx < cs.GetCandidateSize(me); ++c_idx){
+              for(size_t c_idx = cs.GetCandidateSize(me); c_idx--; ){
                 Vertex temp = cs.GetCandidate(me, c_idx);
                 if(temp == v){
                   find = true;
@@ -165,7 +169,8 @@ void Backtrack::Backtracking(
     auto u = extendable.at(min_ext_idx);
     extendable.erase(remove(extendable.begin(), extendable.end(), u), extendable.end());
     //for each v in ext_cand[u]
-    for(size_t cand_idx = 0; cand_idx < ext_cand[u].size(); ++cand_idx){
+    //for(size_t cand_idx = 0; cand_idx < ext_cand[u].size(); ++cand_idx){
+    for(size_t cand_idx = ext_cand[u].size(); cand_idx--; ){
       Vertex v = ext_cand[u][cand_idx];
 
       if(!visit_d[v]){
