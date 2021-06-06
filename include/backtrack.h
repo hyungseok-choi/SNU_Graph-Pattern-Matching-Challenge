@@ -25,8 +25,6 @@ class Backtrack {
   int count;
   //int** DAG;
 
-
-
   std::vector<std::vector<Vertex>> src_vv;
   std::vector<std::vector<Vertex>> parent;
   std::vector<std::vector<Vertex>> dest_vv;

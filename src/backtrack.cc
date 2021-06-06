@@ -20,7 +20,6 @@ std::vector<Vertex> Backtrack::intersection(std::vector<Vertex> &v1, std::vector
 }
 
 
-
 void Backtrack::BuildDag(){
   float Score[num_q];
   for(size_t u = 0; u < num_q ; ++u){
@@ -52,7 +51,10 @@ void Backtrack::BuildDag(){
   dest_vv.resize(num_q); 
 
   //initialize visit
-  bool visit[num_q] = {false};
+  bool visit[num_q];
+  for(size_t vetx = 0; vetx < num_q; ++vetx){
+    visit[vetx] = false;
+  }
 
   //BFS from root
   int edge_count = 0;
