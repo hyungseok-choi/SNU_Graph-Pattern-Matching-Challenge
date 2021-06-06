@@ -109,8 +109,8 @@ void Backtrack::Backtracking(
       M.insert(std::make_pair(root, v));
       std::vector<std::vector<Vertex>> src_vv_prime = src_vector;
       // compute extendable, extendable_candidates
-      // for(size_t idx = 0; idx < dest_vv[root].size(); ++idx){
-      for(size_t idx = dest_vv[root].size(); idx--; ){
+      for(size_t idx = 0; idx < dest_vv[root].size(); ++idx){
+      //for(size_t idx = dest_vv[root].size(); idx--; ){
         std::vector<Vertex> src = src_vector[dest_vv[root][idx]];
         //remove src from destination's source list
         src.erase(std::remove(src.begin(), src.end(), root), src.end());
@@ -121,8 +121,8 @@ void Backtrack::Backtracking(
           extendable.push_back(me);
           //compute vector of ext_cand[me]
           std::vector<Vertex> result;
-          //for(size_t p_idx = 0; p_idx < parent[me].size(); ++p_idx){
-          for(size_t p_idx = parent[me].size(); p_idx--; ){
+          for(size_t p_idx = 0; p_idx < parent[me].size(); ++p_idx){
+          //for(size_t p_idx = parent[me].size(); p_idx--; ){
             auto p_id = parent[me][p_idx];
             std::vector<Vertex> u_p;
             //find vertices v adjacent to M[p_id] in G, 
@@ -169,8 +169,8 @@ void Backtrack::Backtracking(
     auto u = extendable.at(min_ext_idx);
     extendable.erase(remove(extendable.begin(), extendable.end(), u), extendable.end());
     //for each v in ext_cand[u]
-    //for(size_t cand_idx = 0; cand_idx < ext_cand[u].size(); ++cand_idx){
-    for(size_t cand_idx = ext_cand[u].size(); cand_idx--; ){
+    for(size_t cand_idx = 0; cand_idx < ext_cand[u].size(); ++cand_idx){
+    //for(size_t cand_idx = ext_cand[u].size(); cand_idx--; ){
       Vertex v = ext_cand[u][cand_idx];
 
       if(!visit_d[v]){
