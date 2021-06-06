@@ -33,8 +33,9 @@ void Backtrack::BuildDag(){
       }
     }
     //get score
-    float score = C_ini / (float) deg_u;
-    Score[u] = score;
+    // float score = C_ini / (float) deg_u;
+    // Score[u] = score;
+    Score[u] = C_ini;
   }
 
   //find root
@@ -57,7 +58,6 @@ void Backtrack::BuildDag(){
   }
 
   //BFS from root
-  int edge_count = 0;
   std::queue<size_t> q;
   q.push(root);
   while(!q.empty()){
@@ -69,8 +69,6 @@ void Backtrack::BuildDag(){
         Vertex dest = query.GetNeighbor(nb);
         if(!visit[dest]){
           //what i want to do
-          //DAG[src][dest] = 1;
-          edge_count += 1;
           dest_vv[src].push_back(dest);
           src_vv[dest].push_back(src);
           //keep bfs going
@@ -101,14 +99,16 @@ void Backtrack::Backtracking(
     
   } else if(M.empty()){
     //for each v in candidates of root,
-    for(size_t c_idx = 0; c_idx < cs.GetCandidateSize(root); ++c_idx){
+    // for(size_t c_idx = 0; c_idx < cs.GetCandidateSize(root); ++c_idx){
+    for(size_t c_idx = cs.GetCandidateSize(root); c_idx--; ){
       Vertex v = cs.GetCandidate(root, c_idx);
       // m <- {(r,v)}
       M.clear();
       M.insert(std::make_pair(root, v));
       std::vector<std::vector<Vertex>> src_vv_prime = src_vector;
       // compute extendable, extendable_candidates
-      for(size_t idx = 0; idx < dest_vv[root].size(); ++idx){
+      // for(size_t idx = 0; idx < dest_vv[root].size(); ++idx){
+      for(size_t idx = dest_vv[root].size(); idx--; ){
         std::vector<Vertex> src = src_vector[dest_vv[root][idx]];
         //remove src from destination's source list
         src.erase(std::remove(src.begin(), src.end(), root), src.end());
@@ -246,4 +246,6 @@ void Backtrack::PrintAllMatches() {
   count = 0;
 
   Backtracking(M, extendable, ext_cand, src_vector);
+
+  std::cout << "final count : " << count << "\n";
 }
