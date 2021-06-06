@@ -122,7 +122,6 @@ void Backtrack::Backtracking(
           //compute vector of ext_cand[me]
           std::vector<Vertex> result;
           for(size_t p_idx = 0; p_idx < parent[me].size(); ++p_idx){
-          //for(size_t p_idx = parent[me].size(); p_idx--; ){
             auto p_id = parent[me][p_idx];
             std::vector<Vertex> u_p;
             //find vertices v adjacent to M[p_id] in G, 
@@ -181,7 +180,8 @@ void Backtrack::Backtracking(
         M_prime.insert(std::make_pair(u,v));
         // compute extendable, extendable_candidates
         
-        for(size_t idx = 0; idx < dest_vv[u].size(); ++idx){
+        //for(size_t idx = 0; idx < dest_vv[u].size(); ++idx){
+        for(size_t idx = dest_vv[u].size(); idx--; ){
           std::vector<Vertex> src = src_vv_prime[dest_vv[u][idx]];
           //remove src from destination's source list
           src.erase(std::remove(src.begin(), src.end(), u), src.end());
@@ -243,7 +243,7 @@ void Backtrack::PrintAllMatches() {
 
   visit_d = new bool[num_d];
   
-  for(size_t vetx = 0; vetx < num_d; ++vetx){
+  for(size_t vetx = num_d; vetx--; ){
     visit_d[vetx] = false;
   }
 
@@ -251,6 +251,4 @@ void Backtrack::PrintAllMatches() {
   count = 0;
 
   Backtracking(M, extendable, ext_cand, src_vector);
-
-  std::cout << "final count : " << count << "\n";
 }
