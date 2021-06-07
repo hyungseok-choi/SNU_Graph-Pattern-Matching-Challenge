@@ -91,7 +91,7 @@ void Backtrack::Backtracking(
   if(M.size() == query.GetNumVertices()){
     //Report M
     count += 1;
-    std::cout << "c ";
+    std::cout << "a ";
     for(auto it = M.begin(); it != M.end(); it++){
       std::cout << it->second << " ";
     }
