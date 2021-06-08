@@ -1,4 +1,5 @@
 # Graph Pattern Matching Challenge
+***You may use basic pruning techniques, but since the challenge aims to find a good matching order, you are not expected to use complicated pruning techniques (like Failing Set of DAF).***
 ## Compile and Execute 
 ### main program
 ```
